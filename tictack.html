@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        /* Cursor and loading screen styling */
+        * {
+          cursor: pointer;
+        }
+        body {
+          overflow: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+          margin: 0;
+          background: linear-gradient(135deg, #ffeb3b, #ffe0b2); /* Subtle gradient background */
+          /*background-color: #f2f2f2;*/
+        }
+
+         /* Adding background animation */
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr); /* Grid layout for circles */
+      gap: 2px; /* Minimal spacing between circles */
+      justify-content: center;
+      align-items: center;
+      pointer-events: none;
+    }
+
+    /* Floating circle styles */
+    .circle {
+        width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: float 2s ease-in-out infinite;
+      background-color: rgb(204, 19, 19);
+    }
+    
+
+    /* Floating animation for circles */
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0); }
+    }
+
+        .loading {
+          /*background-color: #c83030;
+          position: fixed;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          display: flex;
+          align-items: top;
+          justify-content: center;*/
+          position: fixed;
+          bottom: 10px;
+          left: 10px;
+          margin-left: 20px;
+          margin-bottom:0px;
+          width: 200px;
+          height: auto;
+          z-index: 10;
+          padding: 10px;
+          border-radius: 10px;
+          background: transparent;
+        }
+        .loading img {
+          /*display: block;
+          min-height: 309px;
+          min-width: 300px;*/
+          width: 100%;
+          height: auto;
+        }
+        .mouse {
+          width: 25px;
+          height: 25px;
+          border-radius: 100%;
+          /*background-color: white;*/
+          position: absolute;
+          animation: mouseAnimation .5s infinite ease-in-out alternate;
+          left: 0;
+          top: 0;
+          pointer-events: none;
+        }
+        @keyframes mouseAnimation {
+          from {
+            width: 0px;
+            height: 0px;
+          }
+          to {
+            width: 0px;
+            height: 0px;
+          }
+        }
+        /* Add any additional styling for your Tic-Tac-Toe board here */
+      </style>
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>Tic-Tac-Toe</title>
+       <link rel="stylesheet" href="styletictack.css">
+</head>
+<body class="tictactoe">
+    <div class="app-container" id="ticTacToe">
+        <h1>Tic-Tac-Toe</h1>
+        <div class="board" id="board"></div>
+        <div class="tic-tac-toe-container">
+            <button id="resetButtontictactoe" class="tic-tac-toe-button">Reset Game</button>
+        </div>
+        <div class="controls1">
+            <label>
+               <button><input type="checkbox" id="vsComputer" /> Play against Computer </button> 
+            </label>
+        </div>
+        <div class="status" id="status"></div>
+    </div>
+    <div class="status" id="status" style="font-size: 2em; color: #ff5722; margin-top: 20px;">
+    </div>
+    <script src="scripttictack.js"></script>
+</body>
+
+  <body>
+    <!-- Loading Screen -->
+    <div class="loading">
+        <img src="http://a.top4top.net/p_1990j031.gif" alt="Loading">
+      </div>
+
+      <!-- Background Animation -->
+  <div class="background">
+     <!-- 20 circles for animated background effect -->
+     <div class="circle"></div>
+     <div class="circle"></div>
+     <div class="circle"></div>
+     <div class="circle"></div>
+     <div class="circle"></div>
+     <div class="circle"></div>
+     <div class="circle"></div>
+     <div class="circle"></div>
+     <div class="circle"></div>
+     <div class="circle"></div>
+     <div class="circle"></div>
+     <div class="circle"></div>
+     <div class="circle"></div>
+     <div class="circle"></div>
+     <div class="circle"></div>
+     <div class="circle"></div>
+     <div class="circle"></div>
+     <div class="circle"></div>
+     <div class="circle"></div>
+     <div class="circle"></div>
+     <div class="circle"></div>
+     <div class="circle"></div>
+     <div class="circle"></div>
+     <div class="circle"></div>
+  </div>
+    
+      <!-- Cursor Animation -->
+      <div class="mouse original"></div>
+      <script>
+        $(document).ready(function() {
+          // Set loading screen to fit window size
+          $(".loading").css({
+            paddingTop: ($(".loading").height() - $(".loading img").height()) / 2, 
+            paddingLeft: ($(".loading").width() - $(".loading img").width()) / 2
+          });
+    
+          // Adjust loading screen on window resize
+          $(window).resize(function () {
+            $(".loading").height($(window).height());
+            $(".loading").width($(window).width());
+            $(".loading").css({
+              paddingTop: ($(".loading").height() - $(".loading img").height()) / 2, 
+              paddingLeft: ($(".loading").width() - $(".loading img").width()) / 2
+            });
+          });
+    
+          // Mouse trail effect
+          $(window).mousemove(function (e) {
+            $(".original").clone(true)
+              .appendTo("body").css({
+                left: e.pageX - 16,
+                top: e.pageY - 16
+              }).removeClass("original");    
+          });
+    
+          /*// Hide loading screen after a delay or when Tic-Tac-Toe is ready
+          setTimeout(function() {
+            $(".loading").fadeOut();
+          }, 2000); // Adjust the timeout as needed*/
+        });
+      </script>
+  </body>
+</html>
